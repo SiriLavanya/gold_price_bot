@@ -1,22 +1,24 @@
 import requests
+from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 load_dotenv()
-from bs4 import BeautifulSoup
 
 def get_gold_prices():
     try:
-        url = "https://www.goodreturns.in/gold-rates/"  # works on Render
-        headers = {'User-Agent': 'Mozilla/5.0'}
+        url = "https://www.goodreturns.in/gold-rates/"
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+            'Accept-Language': 'en-US,en;q=0.9',
+        }
 
         response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status()  # Raise error for bad status
+        response.raise_for_status()
 
         soup = BeautifulSoup(response.text, 'html.parser')
-        table = soup.find("table", class_="gold_silver_table")  # main gold table
+        table = soup.find("table", class_="gold_silver_table")
 
         rows = table.find_all("tr")
-        gold_22k = None
-        gold_24k = None
+        gold_22k = gold_24k = None
 
         for row in rows:
             cols = row.find_all("td")
