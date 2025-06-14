@@ -26,3 +26,4 @@ jobs:
         TWILIO_SID: ${{ secrets.TWILIO_SID }}
         TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
       run: python send_gold_price.py
+
