@@ -2,15 +2,15 @@ name: Gold Price WhatsApp Bot
 
 on:
   schedule:
-    - cron: '30 3 * * *'  # 9:00 AM IST daily
-  workflow_dispatch:  # allows manual trigger
+    - cron: '30 3 * * *'  # Runs daily at 9:00 AM IST (03:30 UTC)
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 jobs:
   send-gold-price:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
+    - name: Checkout repository
       uses: actions/checkout@v3
 
     - name: Set up Python
@@ -19,11 +19,14 @@ jobs:
         python-version: '3.10'
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
     - name: Run WhatsApp bot
       env:
         TWILIO_SID: ${{ secrets.TWILIO_SID }}
         TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+        TWILIO_FROM: ${{ secrets.TWILIO_FROM }}
+        TWILIO_TO: ${{ secrets.TWILIO_TO }}
       run: python send_gold_price.py
-
