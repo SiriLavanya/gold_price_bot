@@ -1,4 +1,6 @@
 import requests
+from dotenv import load_dotenv
+load_dotenv()
 from bs4 import BeautifulSoup
 
 def get_gold_prices():
