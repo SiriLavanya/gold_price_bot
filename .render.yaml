@@ -1,0 +1,9 @@
+services:
+  - type: cron
+    name: gold-price-notifier
+    schedule: "0 9 * * *" # Every day at 9 AM IST
+    timezone: Asia/Kolkata
+    plan: free
+    env: python
+    buildCommand: ""
+    startCommand: "python whatsapp_sender.py"
